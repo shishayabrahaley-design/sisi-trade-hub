@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sisay Online Trade Hub</title>
+
+    <style>
+    /* ---------------- Base ---------------- */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #f4f7f9;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    /* ---------------- Header & Navigation ---------------- */
+   header {
+    position: relative;   /* <-- ADD THIS */
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    color: white;
+    padding: 20px 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+
+    header h1 {
+        margin-bottom: 10px;
+        font-size: 28px;
+        letter-spacing: 1px;
+    }
+
+    nav {
+        margin-top: 10px;
+    }
+
+    nav a {
+        text-decoration: none;
+        color: white;
+        margin: 0 12px;
+        font-weight: 600;
+        padding: 6px 12px;
+        border-radius: 4px;
+        transition: background 0.3s, color 0.3s;
+    }
+
+    nav a:hover {
+        background: rgba(255,255,255,0.2);
+    }
+
+    /* ---------------- Sections ---------------- */
+    section {
+        display: none;
+        padding: 40px 20px;
+        text-align: left;
+    }
+
+    section.active {
+        display: block;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
+
+    section p, section h2, section h3, section li {
+        margin-bottom: 15px;
+    }
+
+    /* ---------------- Listings ---------------- */
+    .listings-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
+        margin-top: 20px;
+        justify-content: center;
+    }
+
+    .card {
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 10px;
+        width: 220px;
+        text-align: center;
+        background: #fff;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    }
+
+    .card img {
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    /* ---------------- Forms ---------------- */
+    input, textarea, select, button {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        transition: border 0.3s;
+    }
+
+    input:focus, textarea:focus, select:focus {
+        outline: none;
+        border-color: #4CAF50;
+        box-shadow: 0 0 5px rgba(76,175,80,0.3);
+    }
+
+    button {
+        background: #4CAF50;
+        color: white;
+        border: none;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: 6px;
+        transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    button:hover {
+        background: #45a049;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    /* ---------------- Footer ---------------- */
+    footer {
+        background: #ffffff;
+        text-align: center;
+        padding: 20px 10px;
+        margin-top: 40px;
+        box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+        font-size: 14px;
+        color: #555;
+    }
+
+    /* ---------------- Contact Page ---------------- */
+    .contact-info {
+        background: #e8f4ff;
+        padding: 15px;
+        border-left: 4px solid #4CAF50;
+        margin-bottom: 20px;
+        border-radius: 4px;
+    }
+
+    .flex-container {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .flex-item {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .required {
+        color: red;
+    }
+    #logoutBtn {
+    display: none;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: #e53935;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+#logoutBtn:hover {
+    background: #c62828;
+    transform: translateY(-2px);
+}
+
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Sisay Online Trade Hub</h1>
+    <nav>
+        <a onclick="showPage('home')">Home</a>
+        <a onclick="showPage('lists')">Listings</a>
+        <a onclick="showPage('postAd')">Post an Ad</a>
+        <a onclick="showPage('login')">Login</a>
+        <a onclick="showPage('about')">About Me</a>
+    </nav>
+    <button id="logoutBtn">Logout</button>
+
+
+</header>
+
+<!-- HOME -->
+<section id="home" class="active">
+    <div class="container">
+    <h2>Welcome to Sisay Online Trade Hub</h2>
+    <p>Your trusted local marketplace for buying and selling anything—from electronics and vehicles to home essentials and services.</p>
+    <p>We make it fast, simple, and secure for everyone to trade online within their community.</p>
+
+    <h3>Featured Categories</h3>
+    <div class="listings-grid">
+        <div class="card">
+            <h4>Electronics</h4>
+            <p>Smartphones, laptops, cameras, gaming consoles and accessories.</p>
+        </div>
+        <div class="card">
+            <h4>Vehicles</h4>
+            <p>Cars, motorcycles, bicycles, auto parts, rentals and more.</p>
+        </div>
+        <div class="card">
+            <h4>Home & Furniture</h4>
+            <p>Chairs, sofas, fridges, beds, kitchenware and household items.</p>
+        </div>
+        <div class="card">
+            <h4>Jobs & Services</h4>
+            <p>Local jobs, freelance gigs, repair services, and professional support.</p>
+        </div>
+    </div>
+
+    <h3>About Us</h3>
+    <p>Sisay Online Trade Hub connects people who want to buy, sell, or exchange products in an easy and safe environment. 
+    Whether you are searching for affordable items or looking to sell your own, our platform brings the marketplace directly to your hands.</p>
+
+    <p>Our mission is to support local trading and help people make smart and cost-effective choices. 
+    We believe everyone should have access to a simple online market without the need for complicated processes.</p>
+
+    <h3>How It Works</h3>
+    <p><strong>1.</strong> Browse thousands of listings across categories.</p>
+    <p><strong>2.</strong> Open any post to view detailed descriptions, prices, and seller contact information.</p>
+    <p><strong>3.</strong> Want to sell something? Easily create your ad with title, price, photo, and description.</p>
+    <p><strong>4.</strong> Buyers can contact you directly through the details you provide.</p>
+
+    <h3>Why Choose Us</h3>
+    <ul>
+        <li> Simple and user-friendly interface.</li>
+        <li> Local marketplace focused on trust and security.</li>
+        <li> Fast posting experience—upload your ad in seconds.</li>
+        <li> Zero posting fees—completely free to use.</li>
+        <li> Supports all devices: phones, tablets, and computers.</li>
+    </ul>
+
+    <h3>Our Vision</h3>
+    <p>We aim to become the most reliable online marketplace across Ethiopia and beyond — a hub where anyone can 
+    discover affordable items, promote their services, and trade with confidence.</p>
+
+    <h3>Get Started Today</h3>
+    <p>Explore listings, create ads, and make your online buying and selling experience smooth and enjoyable. 
+    Join the Sisay Online Trade Hub community — fast, free, and accessible for everyone.</p>
+</div>
+</section>
+
+<!-- LISTINGS -->
+<section id="lists">
+    <h2>All Listings</h2>
+    <div class="listings-grid" id="listingsContainer"></div>
+</section>
+
+<!-- POST AD -->
+<section id="postAd">
+    <h2>Post Your Ad</h2>
+    <form id="adForm">
+        <label>Title</label>
+        <input type="text" id="title" required>
+        <label>Category</label>
+        <select id="category" required>
+            <option>Electronics</option>
+            <option>Vehicles</option>
+            <option>Home & Furniture</option>
+            <option>Jobs & Services</option>
+        </select>
+        <label>Price</label>
+        <input type="text" id="price" required>
+        <label>Contact</label>
+        <input type="text" id="contact" required>
+        <label>Image URL</label>
+        <input type="text" id="image">
+  <button onclick="openPostAd()">Post an Ad</button>
+
+    </form>
+   
+
+</section>
+
+<!-- CONTACT PAGE -->
+<section id="contact">
+    <h2>Contact Us</h2>
+    <p><strong>Email:</strong> info@sisaytradehub.com</p>
+    <p><strong>Phone:</strong> +251 912 345 678</p>
+    <p><strong>Address:</strong> Mekelle, Ethiopia</p>
+
+    <form id="contactForm">
+        <div class="flex-container">
+            <div class="flex-item">
+                <label>Name <span class="required">*</span></label>
+                <input type="text" id="contactName" required>
+            </div>
+            <div class="flex-item">
+                <label>Email <span class="required">*</span></label>
+                <input type="email" id="contactEmail" required>
+            </div>
+        </div>
+        <label>Phone (optional)</label>
+        <input type="text" id="contactPhone">
+        <label>Message <span class="required">*</span></label>
+        <textarea id="contactMessage" rows="6" required></textarea>
+        <button type="submit">Send Message</button>
+    </form>
+</section>
+
+<!-- LOGIN -->
+<section id="login">
+    <h2>Login</h2>
+    <form id="loginForm">
+        <label>Email</label>
+        <input type="email" id="loginEmail" required>
+        <label>Password</label>
+        <input type="password" id="loginPassword" required>
+        <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a onclick="showPage('register')" style="color:blue;">Register</a></p>
+</section>
+
+<!-- REGISTER -->
+<section id="register">
+    <h2>Create Account</h2>
+    <form id="registerForm">
+        <label>Full Name</label>
+        <input type="text" id="regName" required>
+        <label>Email</label>
+        <input type="email" id="regEmail" required>
+        <label>Password</label>
+        <input type="password" id="regPassword" required>
+        <button type="submit">Register</button>
+    </form>
+</section>
+
+<!-- ABOUT ME -->
+<section id="about">
+    <h2>About Me</h2>
+    <p><strong>Name:</strong> Shishay Abrahaley</p>
+    <p><strong>ID:</strong> UGR/189989/16</p>
+    <p><strong>Department:</strong> Software Engineering</p>
+    <p><strong>Email:</strong> shishayabrahaley@gmail.com</p>
+    <p>Hello! I am Shishay Abrahaley, a student in the Software Engineering department. Welcome to my online trade hub project where you can buy and sell products safely!</p>
+</section>
+
+<footer>
+    © 2025 Sisay Online Trade Hub. All rights reserved.
+</footer>
+
+<script>
+/* PAGE SWITCH */
+function showPage(id) {
+    document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+}
+
+/* LOAD LISTINGS */
+function renderListings() {
+    const container = document.getElementById("listingsContainer");
+    const listings = JSON.parse(localStorage.getItem("listings")) || [];
+    container.innerHTML = "";
+    listings.forEach(item => {
+        container.innerHTML += `
+            <div class="card">
+                <img src="${item.image}">
+                <h4>${item.title}</h4>
+                <p>${item.category}</p>
+                <p><strong>${item.price}</strong></p>
+                <p>${item.contact}</p>
+                <button onclick="buyNow('${item.title}')">Buy Now</button>
+            </div>
+        `;
+    });
+}
+/* buy now function */
+function buyNow(itemName) {
+    if (!localStorage.getItem('loggedInUser')) {
+        alert("You must login first!");
+        showPage('login');
+        return;
+    }
+    alert("Purchase request for " + itemName + " sent successfully!");
+}
+
+/* CONTACT FORM */
+document.getElementById("contactForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    alert("Your message has been sent!");
+    this.reset();
+});
+
+/* REGISTER */
+document.getElementById("registerForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const email = regEmail.value;
+    if(users.some(u=>u.email===email)){ alert("Email already exists!"); return;}
+    users.push({name: regName.value,email: email,pass: regPassword.value});
+    localStorage.setItem("users", JSON.stringify(users));
+    alert("Registered successfully! You can login now.");
+    showPage("login");
+});
+// show/hide helper for logout button and header text
+function updateLoginStateUI() {
+    const user = JSON.parse(localStorage.getItem('loggedInUser'));
+    const logoutBtn = document.getElementById('logoutBtn');
+    const headerTitle = document.querySelector('header h1');
+
+    if (user) {
+        // show logout button and welcome in header
+        logoutBtn.style.display = 'inline-block';
+        headerTitle.textContent = `Sisay Online Trade Hub - Welcome, ${user.name}`;
+    } else {
+        // hide logout button and reset header
+        logoutBtn.style.display = 'none';
+        headerTitle.textContent = 'Sisay Online Trade Hub';
+    }
+}
+// Check if user is logged in before posting an ad
+function openPostAd() {
+    const loggedInUser = localStorage.getItem("loggedInUser");
+
+    if (!loggedInUser) {
+        alert("You must log in first before posting an ad.");
+        window.location.href = "login.html"; // redirect to login page
+        return;
+    }
+
+    // If logged in → show the post ad section
+    document.getElementById("postAdSection").style.display = "block";
+}
+
+
+// logout function
+function logout() {
+    localStorage.removeItem('loggedInUser');
+    updateLoginStateUI();
+    alert('You have been logged out.');
+    showPage('login');
+    localStorage.removeItem("loggedInUser");
+     localStorage.removeItem("loggedInUser");
+    alert("Logged out successfully!");
+    window.location.reload();
+}
+   
+
+// attach logout click (safe to call even if element not present yet)
+document.addEventListener('DOMContentLoaded', function() {
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', logout);
+    }
+
+    // set UI according to current login status on page load
+    updateLoginStateUI();
+});
+
+// Modified login handler (use exact element references)
+document.getElementById('loginForm').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const email = document.getElementById('loginEmail').value.trim();
+    const pass  = document.getElementById('loginPassword').value;
+
+    const user = users.find(u => u.email === email && u.pass === pass);
+
+    if (!user) {
+        alert('Invalid credentials!');
+        return;
+    }
+
+    localStorage.setItem('loggedInUser', JSON.stringify(user));
+    alert('Welcome ' + user.name);
+
+    // show logout button and update header
+    updateLoginStateUI();
+
+    showPage('home');
+    localStorage.setItem("loggedInUser", username);
+
+});
+
+function openPostAd() {
+    const loggedInUser = localStorage.getItem("loggedInUser");
+
+    if (!loggedInUser) {
+        alert("You must log in first before posting an ad.");
+        showPage("login"); // show the login section instead of redirect
+        return;
+    }
+
+    // If logged in → show the post ad section
+    showPage("postAd");
+}
+
+
+
+
+
+/* DEFAULT LISTING */
+if(!localStorage.getItem("listings")){
+    localStorage.setItem("listings", JSON.stringify([
+       {
+    title:'Smartphone X12',
+    category:'Electronics',
+    price:'$100',
+    contact:'+251 910 001 234',
+    image:'hello.webp'
+},
+{
+    title:'hp Laptop i5',
+    category:'electronics',
+    price:'$200',
+    contact:'+251 920 456 789',
+    image:'download.jpg'
+},
+{
+    title:'camera',
+    category:'electronics',
+    price:'$500',
+    contact:'+251 930 112 233',
+    image:'camera.jpg'
+},
+{
+    title:'bugatti',
+    category:'vehicle',
+    price:'$1000',
+    contact:'+251 940 223 344',
+    image:'car.jpg'
+},
+{
+    title:'motor bike',
+    category:'vehicle',
+    price:'$500',
+    contact:'+251 950 334 455',
+    image:'motor-bike.jpg'
+},
+{
+    title:'chairs',
+    category:'Home & Furniture',
+    price:'$50',
+    contact:'+251 960 445 566',
+    image:'chairs.jpg'
+},
+{
+    title:'sofa',
+    category:'Home & Furniture',
+    price:'$100',
+    contact:'+251 970 556 677',
+    image:'sofa.jpg'
+},
+{
+    title:'fridge',
+    category:'Home & Furniture',
+    price:'$200',
+    contact:'+251 980 667 788',
+    image:'fridge.jpg'
+},
+{
+    title:'bed',
+    category:'Home & Furniture',
+    price:'$200',
+    contact:'+251 990 778 899',
+    image:'bed.jpg'
+},
+{
+    title:'local job website tester',
+    category:'jobs $ services',
+    price:'$1000',
+    contact:'jobs@sisaytradehub.com',
+    image:'web-site-tester.jpg'
+},
+{
+    title:'freelance gigs',
+    category:'jobs & services',
+    price:'$800',
+    contact:'freelance@sisaytradehub.com',
+    image:'freelance.jpg'
+},
+{
+    title:'bicycle',
+    category:'vehicle',
+    price:'$50',
+    contact:'+251 911 889 900',
+    image:'bicycle.jpg'
+}
+
+    ]));
+}
+
+
+renderListings();
+</script>
+
+</body>
+</html>
